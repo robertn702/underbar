@@ -71,7 +71,7 @@ var _ = {};
     _.each(array, function(item, index) {
       if (item === target && result === -1) {
         result = index;
-      }
+      };
     });
 
     return result;
@@ -79,12 +79,24 @@ var _ = {};
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var newArray = [];
+    var newArrayIt = 0;
+    
+    for (var i = 0; i < collection.length; i++) {
+      if (test(collection[i])) {
+        newArray[newArrayIt] = collection[i];
+        newArrayIt++;
+      };
+    };
+    
+    return newArray;
   };
 
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    
   };
 
   // Produce a duplicate-free version of the array.
