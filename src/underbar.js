@@ -96,7 +96,17 @@ var _ = {};
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    var newArray = [];
+    var newArrayIt = 0;
     
+    for (var i = 0; i < collection.length; i++) {
+      if (!test(collection[i])) {
+        newArray[newArrayIt] = collection[i];
+        newArrayIt++;
+      };
+    };
+    
+    return newArray;
   };
 
   // Produce a duplicate-free version of the array.
