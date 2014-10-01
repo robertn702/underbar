@@ -178,7 +178,22 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
-  };
+    var previousValue;
+    // typeof accumulator === 'number' ? previousValue = accumulator : previousValue = collection[0];
+    arguments.length < 3 ? previousValue = collection[0] : previousValue = accumulator;
+
+    if(Array.isArray(collection)) {
+      for (var i = 0; i < collection.length; i++){
+        previousValue = iterator(previousValue, collection[i]);
+      };
+    } else {
+      for (var j in collection) {
+        previousValue = iterator(previousValue, collection[j]);
+      };
+    };
+
+      return previousValue;
+    };
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
