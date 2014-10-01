@@ -245,7 +245,6 @@ var _ = {};
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
     for (var i = 1 ; i < arguments.length ; i++) {
-      console.log(arguments[i]);
       for (var key in arguments[i]){
         arguments[0][key] = arguments[i][key];
       };
@@ -256,6 +255,15 @@ var _ = {};
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    console.log(arguments[0]);
+    for (var i = 1 ; i < arguments.length ; i++) {
+      for (var key in arguments[i]) {
+        console.log(typeof arguments[0][key] !== 'undefined');
+        typeof arguments[0][key] !== 'undefined' ? arguments[0][key] = arguments[0][key] : arguments[0][key] = arguments[1][key];
+      };
+    };
+    console.log(arguments[0]);
+    return arguments[0];
   };
 
 
