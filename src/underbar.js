@@ -255,14 +255,11 @@ var _ = {};
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
-    console.log(arguments[0]);
     for (var i = 1 ; i < arguments.length ; i++) {
       for (var key in arguments[i]) {
-        console.log(typeof arguments[0][key] !== 'undefined');
         typeof arguments[0][key] !== 'undefined' ? arguments[0][key] = arguments[0][key] : arguments[0][key] = arguments[1][key];
       };
     };
-    console.log(arguments[0]);
     return arguments[0];
   };
 
@@ -305,6 +302,14 @@ var _ = {};
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var memoize = function(key) {
+      memoize.storedVals = {};
+      if (memoize.storedVals[key] !== 'undefined') {
+        memoize.storedVals[key] = func.apply(this, arguments);
+      };     
+      return memoize.storedVals[key];
+    };
+    return memoize;
   };
 
   // Delays a function for the given number of milliseconds, and then calls
