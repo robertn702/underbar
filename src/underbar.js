@@ -303,12 +303,14 @@ var _ = {};
   // instead if possible.
   _.memoize = function(func) {
     var memoize = function(key) {
-      memoize.storedVals = {};
-      if (memoize.storedVals[key] !== 'undefined') {
-        memoize.storedVals[key] = func.apply(this, arguments);
+      var storedVals = memoize.storedVals;
+      if (storedVals[key] !== 'undefined') {
+        storedVals[key] = func.apply(this, arguments);
       };     
-      return memoize.storedVals[key];
+
+      return storedVals[key];
     };
+    memoize.storedVals = {};
     return memoize;
   };
 
@@ -318,9 +320,20 @@ var _ = {};
   // The arguments for the original function are passed after the wait
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
-  _.delay = function(func, wait) {
-  };
 
+  // _.delay = function(func, wait) {
+  //   var args = arguments.slice(2, arguments.length);
+  //   return setTimeout(function(){
+  //     return func.apply(null, args);
+  //   }, wait);
+  // };
+
+  _.delay = function(func, wait) {
+    var args = slice.call(arguments, 2);
+    return setTimeout(function() {
+      return func.apply(null, args);
+    }, wait);
+  };
 
   /**
    * ADVANCED COLLECTION OPERATIONS
@@ -333,6 +346,25 @@ var _ = {};
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    
+    // choose random index
+    // check if index is in previous index array
+    // if yes -> choose another index
+    // if no -> push array contents into shuffled array
+    // loop until copied array length = 0
+    var middleArray = array.slice(0);
+    var shuffled = [];
+    var index;
+
+    while (middleArray.length > 0){
+      index = Math.floor(Math.random() * (middleArray.length - 1));
+      shuffled.push(middleArray.slice(index, index + 1)[0]);
+      middleArray.splice(index, 1);
+    };
+
+    // console.log(middleArray);
+    console.log(shuffled);
+    return shuffled;
   };
 
 
@@ -387,4 +419,5 @@ var _ = {};
   _.throttle = function(func, wait) {
   };
 
-}).call(this);
+  }).call(this);
+  
