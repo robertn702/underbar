@@ -301,17 +301,15 @@ var _ = {};
   // _.memoize should return a function that when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+
   _.memoize = function(func) {
-    var memoize = function(key) {
-      var storedVals = memoize.storedVals;
-      if (storedVals[key] !== 'undefined') {
+    var storedVals = {};
+    return function(key) {
+      if (!storedVals.hasOwnProperty(key)) {
         storedVals[key] = func.apply(this, arguments);
       };     
-
       return storedVals[key];
     };
-    memoize.storedVals = {};
-    return memoize;
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -329,10 +327,10 @@ var _ = {};
   // };
 
   _.delay = function(func, wait) {
-    var args = slice.call(arguments, 2);
-    return setTimeout(function() {
-      return func.apply(null, args);
-    }, wait);
+    var args = arguments.slice(2);
+    // console.log(args);
+    // console.log('hello'); 
+    return setTimeout(function() { return func.apply(null, args); }, wait);
   };
 
   /**
@@ -346,12 +344,6 @@ var _ = {};
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    
-    // choose random index
-    // check if index is in previous index array
-    // if yes -> choose another index
-    // if no -> push array contents into shuffled array
-    // loop until copied array length = 0
     var middleArray = array.slice(0);
     var shuffled = [];
     var index;
@@ -362,8 +354,6 @@ var _ = {};
       middleArray.splice(index, 1);
     };
 
-    // console.log(middleArray);
-    console.log(shuffled);
     return shuffled;
   };
 
