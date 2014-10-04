@@ -220,8 +220,11 @@ var _ = {};
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
-    
-    // return _.every(collection, function())
+    var newArray = _.map(collection, function(item) {
+      return typeof iterator === 'undefined' ? Boolean(item) : Boolean(iterator(item));
+    });
+
+    return _.contains(newArray, true);
   };
 
 
