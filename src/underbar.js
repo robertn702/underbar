@@ -212,7 +212,7 @@ var _ = {};
     // TIP: Try re-using reduce() here.
     return _.reduce(collection, function(isTrue, item){
       if (!isTrue){return false;};
-      return Boolean(iterator(item));
+      return typeof iterator === 'undefined' ? true : Boolean(iterator.call(this, item));
     }, true);
    };
 
@@ -320,7 +320,6 @@ var _ = {};
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
     var args = Array.prototype.slice.call(arguments, 2);
-    console.log(args);
     return setTimeout(function() { return func.apply(null, args); }, wait);
   };
 
