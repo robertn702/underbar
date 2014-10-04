@@ -318,18 +318,9 @@ var _ = {};
   // The arguments for the original function are passed after the wait
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
-
-  // _.delay = function(func, wait) {
-  //   var args = arguments.slice(2, arguments.length);
-  //   return setTimeout(function(){
-  //     return func.apply(null, args);
-  //   }, wait);
-  // };
-
   _.delay = function(func, wait) {
-    var args = arguments.slice(2);
-    // console.log(args);
-    // console.log('hello'); 
+    var args = Array.prototype.slice.call(arguments, 2);
+    console.log(args);
     return setTimeout(function() { return func.apply(null, args); }, wait);
   };
 
